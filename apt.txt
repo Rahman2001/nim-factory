@@ -1,5 +1,9 @@
 # apt packages to install should be listed one per line
-apt-get update && apt-get -y install python3.10 python3-pip
-apt install unzip
-apt-get wget
-apt-get update && apt-get -y install openmpi-bin libopenmpi-dev git git-lfs
+python3.10 
+python3-pip
+unzip
+wget
+openmpi-bin
+libopenmpi-dev
+git
+git-lfs
