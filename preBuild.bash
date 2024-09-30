@@ -3,4 +3,4 @@
 # before any system packages or programming language specific package have been installed.
 #
 # Note: This file may be removed if you don't need to use it
-apt-get update && apt-get -y install python3.10 python3-pip
+-root apt-get update && apt-get -y install python3.10 python3-pip
