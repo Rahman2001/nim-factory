@@ -1,5 +1,5 @@
 # Project Name
-This project is ________. (Describe the main goals of the project. Limit to 1-2 sentences)
+This project is a factory for NVIDIA NIM containers in which users/businesses can quantize many models and build their own TensorRT-LLM engine for optimized inference. This enables users/businesses with a large hardware resources and smaller business goals to save compute power by quantizing LLMs into different sizes. 
 
 ## Description
 Optional section to provide a more detailed overview of the project.
