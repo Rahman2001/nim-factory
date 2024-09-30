@@ -1,0 +1,1 @@
+{"schema":"v1","records":[{"type":"ENVIRONMENT","operation":"CREATED","data":[{"data":"Added packages through pip package manager: megatron-core., git+https://github.com/NVIDIA/NeMo.git, hydra-core, pytorch-lightning, braceexpand, webdataset, ijson, matplotlib, sacrebleu","mime":"text/plain"}],"important":null}]}
