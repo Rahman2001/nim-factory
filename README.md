@@ -15,6 +15,6 @@ From there, you will see how to build an inference engine using Nvidia TensorRT-
 - NVIDIA driver requirements: Latest driver version (with CUDA 12.2)
 - Storage requirements: 40GB
 
-## Quickstart
+# Quickstart
 Optional section to summarize important steps and how to use the project & apps in the project
 
