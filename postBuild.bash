@@ -12,5 +12,6 @@ pip3 install webdataset
 pip3 install ijson
 pip3 install matplotlib
 pip3 install sacrebleu
+pip3 install Cython
 pip3 install tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
 git lfs install
