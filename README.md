@@ -16,5 +16,19 @@ From there, you will see how to build an inference engine using Nvidia TensorRT-
 - Storage requirements: 40GB
 
 # Quickstart
-Optional section to summarize important steps and how to use the project & apps in the project
+This section demonstrates how to use this project to run NVIDIA NIM Factory via NVIDIA AI Workbench. 
+
+## Prerequisites
+
+- Huggingface account: Get a username and token to download models. (some models might require access permission)
+- Enough memory for storing downloaded models.
+
+## Turorial
+1. Install and configure AI Workbench locally and open up __AI Workbench__. Select a location of your choice.
+2. Fork this repo into your own GitHub account.
+3. __Inside AI Workbench:__
+    - Click __Clone Project__ and enter the repo URL of your newly-forked repo.
+    - AI Workbench will automatically clone the repo and build out the project environment, which can take several minutes to complete.
+    - Upon `Build Complete`, select __Open Jupyterlab__ on the top right of the AI Workbench window, and the Jupyterlab app will open in a browser.
+4. __In the Jupyterlab app:__
 
