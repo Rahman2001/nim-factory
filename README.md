@@ -23,7 +23,7 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
 - Huggingface account: Get a username and token to download models. (some models might require access permission)
 - Enough memory for storing downloaded models.
 
-## Turorial: build your own "NIM"
+## Tutorial: build your own "NIM"
 1. Install and configure AI Workbench locally and open up __AI Workbench__. Select a location of your choice.
 2. Fork this repo into your own GitHub account.
 3. __Inside AI Workbench:__
