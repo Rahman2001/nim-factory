@@ -31,4 +31,21 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
     - AI Workbench will automatically clone the repo and build out the project environment, which can take several minutes to complete.
     - Upon `Build Complete`, select __Open Jupyterlab__ on the top right of the AI Workbench window, and the Jupyterlab app will open in a browser.
 4. __In the Jupyterlab app:__
+    - Execute 1st and 2nd cells:
+      ```bash
+      # install general requirements for TensorRT-LLM in code/TensorRT-LLM
+      pip install -r code/TensorRT-LLM/requirements.txt
+      # install requirements for particular model existing in examples folder (for ex. gpt)
+      pip install -r code/TensorRT-LLM/examples/gpt/requirements.txt
+      ```
+   - To be able to quantize any model, we need to install additional dependencies in 3<sup>rd</sup>, 4<sup>th</sup> and 5<sup>th</sup> cells:
+     ```bash
+     pip install pickleshare
+     pip install Cython
+     cd code/TensorRT-LLM/examples/gpt
+     ```
+   - Download GPT2 model from Huggingface repo by executing 6<sup>th</sup> cell:
+     ```bash
+     mkdir -p ./gpt2 && git clone https://huggingface.co/openai-community/gpt2 ./gpt2
+     ```
 
