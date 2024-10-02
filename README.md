@@ -48,4 +48,44 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
      ```bash
      mkdir -p ./gpt2 && git clone https://huggingface.co/openai-community/gpt2 ./gpt2
      ```
+   - Start quantizing your model:
+     ```bash
+     # go to quantization directory
+     cd ../quantization
+     # make sure you installed dependencies for quant. again
+     pip install -r requirements.txt
+     # run quantization in int4_awq format
+     %run quantize.py --model_dir ../gpt/gpt2 --qformat int4_awq --awq_block_size 64 --tp_size 1 --output_dir ../gpt/gpt2/gpt2_int4_awq
+     ```
+     __Note:__ All details about quantization [format](https://github.com/NVIDIA/TensorRT-LLM/tree/main/examples/quantization) and supported [models](https://nvidia.github.io/TensorRT-LLM/reference/support-matrix.html) can be found in official documentations.
+   - __Build TensorRT-LLM engine__:
+     ```bash
+     # go to quantized model directory
+     cd ../gpt
+     # use Terminal for building TensorRT-LLM engine
+     trtllm-build --checkpoint_dir gpt2/gpt2_int4_awq --output_dir gpt2/trtllm-engine-gpt2
+     ```
+     If you successfully build engine, you will see the output like:
+     ```bash
+     ......
+     [03/12/2024-10:21:08] [TRT] [I] Engine generation completed in 35.9738 seconds.
+     [03/12/2024-10:21:08] [TRT] [I] [MemUsageStats] Peak memory usage of TRT CPU/GPU memory allocators: CPU 212 MiB, GPU 775 MiB
+     [03/12/2024-10:21:08] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in building engine: CPU +0, GPU +775, now: CPU 0, GPU 775 (MiB)
+     [03/12/2024-10:21:09] [TRT] [I] [MemUsageStats] Peak memory usage during Engine building and serialization: CPU: 6600 MiB
+     [03/12/2024-10:21:09] [TRT-LLM] [I] Total time of building Unnamed Network 0: 00:00:36
+     [03/12/2024-10:21:09] [TRT-LLM] [I] Serializing engine to gpt2/trtllm-engine-gpt2/trrank0.engine...
+     [03/12/2024-10:21:11] [TRT-LLM] [I] Engine serialized. Total time: 00:00:02
+     [03/12/2024-10:21:11] [TRT-LLM] [I] Total time of building all engines: 00:00:41
+     ```
+   - Lastly, you can run built engine for inferencing the quantized model:
+     ```bash
+     cd ..
+     %run run.py --engine_dir gpt/gpt2/trtllm-engine-gpt2
+     ```
+     If the engines are run successfully, you will see output like:
+     ```bash
+     ......
+     Input [Text 0]: "Born in north-east France, Soyer trained as a"
+     Output [Text 0 Beam 0]: " chef before moving to London in the early"
+     ```
 
