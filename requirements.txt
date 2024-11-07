@@ -10,6 +10,6 @@ matplotlib
 sacrebleu
 Cython
 pickleshare
-tensorrt_llm-U--pre--extra-index-urlhttps://pypi.nvidia.com
+tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
 gradio
 Flask
