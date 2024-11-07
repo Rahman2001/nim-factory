@@ -89,7 +89,8 @@ execution:
   - name: simple-gradio-app
     type: custom
     class: webapp
-    start_command: cd /project/code && PROXY_PREFIX=$PROXY_PREFIX python3 app.py
+    start_command: cd /project/code && PROXY_PREFIX=$PROXY_PREFIX python3 -m flask
+      run
     health_check_command: curl -f "http://localhost:8080/"
     stop_command: pkill -f '^python3 app.py'
     user_msg: ""

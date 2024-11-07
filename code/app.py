@@ -4,8 +4,7 @@ from flask import Flask
 proxy_prefix = os.environ.get("PROXY_PREFIX")
 
 app = Flask(__name__)
-app.config['APPLICATION_ROOT'] = proxy_prefix
-app.config['SERVER_NAME'] = "0.0.0.0:8080"
+# app.config['APPLICATION_ROOT'] = proxy_prefix
 
 @app.route("/")
 def hello_world():
