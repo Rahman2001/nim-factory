@@ -1,4 +1,5 @@
 import gradio as gr
+import os
 
 with open("index.html") as f:
     lines = f.readlines()
