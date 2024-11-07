@@ -10,6 +10,6 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
     
-
+app.run()
 
 # demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)
