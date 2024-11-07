@@ -1,17 +1,12 @@
-import os
-from flask import Flask
-from flask import render_template
+import gradio as gr
 
-proxy_prefix = os.environ.get("PROXY_PREFIX")
+with open("index.html") as f:
+    lines = f.readlines()
 
-app = Flask(__name__)
-# app.config['APPLICATION_ROOT'] = proxy_prefix
+with gr.Blocks() as demo:   
+    input_mic = gr.HTML(lines)
+    out_text  = gr.Textbox()
 
-@app.route("/")
-def hello_world():
-    return render_template("index.html")
-
-if __name__ == "__main__":
-    app.run()
-
-# demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)
+if __name__ == "__main__":   
+    proxy_prefix = os.environ.get("PROXY_PREFIX")
+    demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)
