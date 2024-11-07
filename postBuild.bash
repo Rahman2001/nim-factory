@@ -4,4 +4,4 @@
 #
 # Note: This file may be removed if you don't need to use it
 git lfs install
-tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
+pip3 install tensorrt_llm -U --pre --extra-index-url https://pypi.nvidia.com
