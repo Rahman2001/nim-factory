@@ -11,4 +11,4 @@ sacrebleu
 Cython
 pickleshare
 gradio
-Flask
+fastapi[all]

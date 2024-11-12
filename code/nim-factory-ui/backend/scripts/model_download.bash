@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$PWD"
-cd ..
+cd ../../..
 
 mkdir -p model && cd model
 

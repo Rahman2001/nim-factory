@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$PWD"
-cd ..
+cd ../..
 
 if [ -d "TensorRT-LLM" ]; then
   echo "INFO: TensorRT-LLM is already cloned in your project "
