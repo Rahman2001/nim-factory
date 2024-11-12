@@ -1,0 +1,124 @@
+.gradio-container.gradio-container-5-5-0 .contain #component-2 .prose{
+    font-size: var(--text-xl);
+    font-weight: 800;
+}
+
+#component-0>*:nth-child(2){
+    display: flex;
+    align-items: center;
+}
+
+#prep_button {
+    background-color: white;
+    color: rgb(0, 204, 0);
+    border-color: rgb(0, 204, 0);
+    border-style: solid;
+    border-width: thin;
+}
+
+#prep_button:hover {
+    color: white;
+    background-color: #00CC00;
+}
+
+#tensor_markdown, #tensor_mark_fail, #tensor_mark_success {
+    text-align: center;
+}
+
+#tensor_mark_success .prose p {
+    background-color: white;
+    color: #00CC00;
+    font-weight: bold;
+}
+
+#tensor_mark_fail .prose p{
+    background-color: white;
+    color: red;
+    font-weight: bold;
+}
+
+#component-5 > .tab-wrapper {
+    display: contents;
+}
+
+#component-7 > .column {
+    max-width: max(320px, 50%);
+    min-width: min(0px, 100%);
+    border-radius: 13px;
+    border-width: medium;
+    border-color: #00CC00;
+    padding: 5px;
+}
+
+#component-7 >*:nth-child(1) >.column {
+    overflow-y: auto;
+    height: 310px;
+}
+#component-7 >*:nth-child(3) > .form textarea {
+    background-color: black;
+    color: white;
+}
+
+#component-7 .column button, #component-7 .column .row button, #component-35 .column .form > div{
+    width: fit-content;
+}
+
+#component-7 .column button:hover, #component-7 .column .row button:hover{
+    background-color: #00CC00;
+}
+
+#component-7 .column button:focus, #component-7 .column .row button:focus{
+    background-color: #00CC00;
+}
+
+#component-7 div .prose{
+    padding: 1px;
+    background-color: #CCCCCC;
+    border-radius: var(--button-large-radius);
+    text-align: center;
+    font-size: large;
+    font-weight: bolder;
+}
+
+#component-7>*:nth-child(3) {
+    max-width: max(320px, 20%);
+}
+
+#component-7>*:nth-child(3) .prose {
+    background-color: #FFFF33;
+}
+
+#component-10 > div .column {
+    display: flex;
+    flex-direction: row;
+}
+
+#component-35 {
+    width: 95%;
+}
+
+#quantization_window textarea, #build_window textarea, #component-7 >*:nth-child(3) > .form input  {
+    background-color: black;
+    color: white;
+    font-family: "Lucida Console", "Courier New", monospace;
+    font-size: smaller;
+}
+
+#chat_col {
+    height: 460px;
+}
+
+#chat_col >*:nth-child(1) {
+    background-color: silver;
+}
+
+#quantization_setting {
+    height: 480px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#quantization_setting >*:nth-child(1) {
+    overflow-y: auto;
+    display: block;
+}
