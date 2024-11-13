@@ -3,7 +3,7 @@
 cd "$PWD"
 cd ../../..
 
-mkdir -p model && cd model
+mkdir -p models && cd models
 
 outcome=$(find ./"$3" -maxdepth 1 -mindepth 1 -type d)
 

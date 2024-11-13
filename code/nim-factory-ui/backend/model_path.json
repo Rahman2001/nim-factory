@@ -1,1 +1,5 @@
-{"base_model": {}}
+{
+    "base_model": {
+        "gpt2": "/model/gpt2"
+    }
+}

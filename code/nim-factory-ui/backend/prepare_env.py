@@ -50,7 +50,7 @@ def prepare_env(environment: EnvironmentRequestBody):
             json.dump(base_model, f)
 
         hf_link = get_huggingface_repo(environment)
-        hf_token = ""
+        hf_token = "unknown"
         if environment.huggingface is not None:
             hf_token = environment.huggingface['token']
 
