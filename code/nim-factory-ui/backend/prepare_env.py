@@ -23,17 +23,6 @@ def get_huggingface_repo(env: EnvironmentRequestBody):
     hf_model = get_hf_model(env)
     return huggingface_dom + repo_owner + "/" + hf_model
 
-#
-# envir = Environment()
-# model_obj = Model()
-#
-# model_obj.family = "GPT"
-# model_obj.version = "gpt2"
-# model_obj.type = None
-#
-# envir.model = model_obj
-# envir.huggingface = {"username": "rahman777", "token": "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"}
-
 
 def save_model_path(has_model: int, hf_model: str):
     if has_model == 0:
@@ -75,6 +64,3 @@ def prepare_env(environment: EnvironmentRequestBody):
 
     return {"has_tensorrt_llm": has_tensorrt_llm, "has_model": has_model}
 
-
-# if __name__ == '__main__':
-#     prepare_env(envir)

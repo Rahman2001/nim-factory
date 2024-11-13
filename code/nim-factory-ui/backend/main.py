@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from prepare_env import prepare_env
 from EnvironmentRequestBody import EnvironmentRequestBody
+import subprocess
 
+subprocess.run(['chmod', '-R', '+rwx', './scripts/'])
 app = FastAPI()
 
 

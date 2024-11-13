@@ -8,7 +8,7 @@ import os
 import logging
 
 
-BASE_URL = "http://0.0.0.0:8082/projects/nim-factory/applications/gradio-backend-app"
+BASE_URL = "http://0.0.0.0:8082"
 HEADERS = {'Content-Type': 'application/json'}
 model = Model()
 env = Environment()
