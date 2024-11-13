@@ -118,7 +118,7 @@ execution:
       autolaunch: false
       port: "8082"
       proxy:
-        trim_prefix: true
+        trim_prefix: false
       url: http://localhost:8082
   resources:
     gpu:

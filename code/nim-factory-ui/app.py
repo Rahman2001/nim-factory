@@ -4,9 +4,11 @@ from backend.Model import Model
 from backend.models import models
 from backend.Environment import Environment
 import requests
+import os
+import logging
 
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "http://0.0.0.0:8082/projects/nim-factory/applications/gradio-backend-app"
 HEADERS = {'Content-Type': 'application/json'}
 model = Model()
 env = Environment()
@@ -41,7 +43,7 @@ def load_env():
     url = BASE_URL + "/" + "prepare-env"
     env.model = model
     response = requests.post(url, json=env.get_json(), headers=HEADERS).json()
-    print(response)
+    logging.info(response)
     if response["has_tensorrt_llm"] == 0 and response["has_model"] == 0:
         return gr.Markdown("TensorRT-LLM", elem_id="tensor_mark_success")
     else:
@@ -144,4 +146,5 @@ with gr.Blocks(css_paths="nim_ui.css") as demo:
                         engine_btn = gr.Button("Run Engine")
                         engine_btn.click(fn=engine_btn_click, inputs=engine_btn, outputs=engine_btn)
 
-demo.launch()
+proxy_prefix = os.environ.get("PROXY_PREFIX")
+demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)

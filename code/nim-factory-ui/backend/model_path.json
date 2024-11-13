@@ -1,5 +1,0 @@
-{
-    "base_model": {
-        "gpt2": "/model/gpt2"
-    }
-}
