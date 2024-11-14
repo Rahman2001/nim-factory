@@ -1,4 +1,5 @@
 import gradio as gr
+import os
 
 from backend.Model import Model
 from backend.models import models
@@ -6,7 +7,7 @@ from backend.Environment import Environment
 import requests
 import logging
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = "http://0.0.0.0:8082"
 HEADERS = {'Content-Type': 'application/json'}
 model = Model()
 env = Environment()
@@ -74,29 +75,28 @@ def engine_btn_click(button: gr.Button):
     return gr.Button("Stop Engine") if button == "Run Engine" else gr.Button("Run Engine")
 
 
-with gr.Blocks(css="nim_ui.css") as demo:
+with gr.Blocks(css="./nim_ui.css") as demo:
     with gr.Row():
         gr.Markdown("NVIDIA NIM Factory")
         prep_btn = gr.Button("Prepare Environment", elem_id="prep_button")
         tensor_mark = gr.Markdown("TensorRT-LLM", elem_id="tensor_markdown")
 
     with gr.Tabs():
-        with gr.Tab("Environment"):
+        with gr.Tab("Environment", elem_id="environment_tab"):
             with gr.Row():
 
-                with gr.Column():
+                with gr.Column(elem_id="model_fam_col"):
                     gr.Markdown("Which model family would you like to select?")
-                    with gr.Column():
+                    with gr.Column(elem_id="model_fam_btn_col"):
                         model_fam = []
-                        with gr.Row():
-                            for fam_version in models:
-                                model_fam.append(gr.Button(fam_version))
-                with gr.Column():
+                        for fam_version in models:
+                            model_fam.append(gr.Button(fam_version))
+                with gr.Column(elem_id="model_type_col"):
                     gr.Markdown("Which model do you want?")
                     model_ver_drp = gr.Dropdown(interactive=True, label="Model Family Versions")
                     model_names_drp = gr.Dropdown(interactive=True, label="Model Types")
 
-                with gr.Column():
+                with gr.Column(elem_id="hf_col"):
                     gr.Markdown("Hugging Face")
                     hf_username = gr.Textbox(label="Username", placeholder="Write your Hugging Face username",
                                              type="email")
@@ -173,4 +173,6 @@ with gr.Blocks(css="nim_ui.css") as demo:
                         engine_btn = gr.Button("Run Engine")
                         engine_btn.click(fn=engine_btn_click, inputs=engine_btn, outputs=engine_btn)
 
-demo.launch()
+                        
+proxy_prefix = os.environ.get("PROXY_PREFIX")
+demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)
