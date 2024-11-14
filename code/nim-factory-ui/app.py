@@ -4,11 +4,9 @@ from backend.Model import Model
 from backend.models import models
 from backend.Environment import Environment
 import requests
-import os
 import logging
 
-
-BASE_URL = "http://0.0.0.0:8082"
+BASE_URL = "http://127.0.0.1:8000"
 HEADERS = {'Content-Type': 'application/json'}
 model = Model()
 env = Environment()
@@ -50,6 +48,24 @@ def load_env():
         return gr.Markdown("TensorRT-LLM", elem_id="tensor_mark_fail")
 
 
+def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, awq_block_s):
+    url = BASE_URL + "/" + "quantize-model"
+    quant_dic = {
+        "--model_dir": "alndslkan",
+        "--kv_cache_dtype": kv_cache_type,
+        "--qformat": q_format,
+        "--batch_size": batch_s,
+        "--tp_size": tp_s,
+        "--pp_size": pp_s,
+        "--calib_size": calib_s,
+        "--awq_block_size": awq_block_s
+    }
+    output = ""
+    for chunk in requests.post(url, json=quant_dic, headers=HEADERS, stream=True).iter_content():
+        output += chunk.decode("utf-8")
+        yield output
+
+
 def chat_function(message, history):
     return message
 
@@ -58,7 +74,7 @@ def engine_btn_click(button: gr.Button):
     return gr.Button("Stop Engine") if button == "Run Engine" else gr.Button("Run Engine")
 
 
-with gr.Blocks(css_paths="nim_ui.css") as demo:
+with gr.Blocks(css="nim_ui.css") as demo:
     with gr.Row():
         gr.Markdown("NVIDIA NIM Factory")
         prep_btn = gr.Button("Prepare Environment", elem_id="prep_button")
@@ -82,7 +98,8 @@ with gr.Blocks(css_paths="nim_ui.css") as demo:
 
                 with gr.Column():
                     gr.Markdown("Hugging Face")
-                    hf_username = gr.Textbox(label="Username", placeholder="Write your Hugging Face username", type="email")
+                    hf_username = gr.Textbox(label="Username", placeholder="Write your Hugging Face username",
+                                             type="email")
                     hf_token = gr.Textbox(label="Token", placeholder="Write your API token", type="password")
                     hf_username.change(fn=hf_textbox_save, inputs=hf_username)
                     hf_token.change(fn=hf_textbox_save, inputs=hf_token)
@@ -98,23 +115,33 @@ with gr.Blocks(css_paths="nim_ui.css") as demo:
             with gr.Tab("Quantization", elem_id="quantization_tab"):
                 with gr.Row():
                     with gr.Column(scale=3):
-                        gr.Textbox(label="Quantization Window", lines=25, elem_id="quantization_window")
+                        quant_window = gr.Textbox(label="Quantization Window", lines=25, elem_id="quantization_window")
 
                     with gr.Column(elem_id="quantization_setting"):
-                        gr.Dropdown(label="quantization format", choices=['fp8', 'int4_awq', 'w4a8_awq', 'int8_sq'],
-                                    interactive=True)
-                        gr.Number(label="batch size", interactive=True, value=1, minimum=1, info="Default is 1")
-                        gr.Number(label="tensor parallel size", interactive=True, value=1, minimum=1,
-                                  info="Default is 1")
-                        gr.Number(label="pipeline parallel size", interactive=True, value=1, minimum=1,
-                                  info="Default is 1")
-                        gr.Number(label="calibration size", value=512, interactive=True,
-                                  info="Size should be divisible by 8. (Default is 512)", step=8, minimum=8, maximum=512)
-                        gr.Dropdown(label="kv cache dtype", choices=[None, 'int8', 'fp8'], interactive=True, value=None,
-                                    info="If None, kv cache will be as dtype of the model")
-                        gr.Dropdown(label="AWQ algorithm specific block size when quantizing weights", choices=[64, 128],
-                                    value=64, interactive=True, info="Default is 64")
-                        gr.Button("Start Quantization")
+                        quant_format = gr.Dropdown(label="quantization format",
+                                                   choices=['fp8', 'int4_awq', 'w4a8_awq', 'int8_sq'],
+                                                   interactive=True)
+                        batch_size = gr.Number(label="batch size", interactive=True, value=1, minimum=1,
+                                               info="Default is 1")
+                        tp_size = gr.Number(label="tensor parallel size", interactive=True, value=1, minimum=1,
+                                            info="Default is 1")
+                        pp_size = gr.Number(label="pipeline parallel size", interactive=True, value=1, minimum=1,
+                                            info="Default is 1")
+                        calib_size = gr.Number(label="calibration size", value=512, interactive=True,
+                                               info="Size should be divisible by 8. (Default is 512)", step=8,
+                                               minimum=8,
+                                               maximum=512)
+                        kv_cache = gr.Dropdown(label="kv cache dtype", choices=[None, 'int8', 'fp8'], interactive=True,
+                                               value=None,
+                                               info="If None, kv cache will be as dtype of the model")
+                        awq_block_size = gr.Dropdown(label="AWQ algorithm specific block size when quantizing weights",
+                                                     choices=[64, 128],
+                                                     value=64, interactive=True, info="Default is 64")
+                        quant_btn = gr.Button("Start Quantization")
+
+                        quant_btn.click(fn=start_quantization, inputs=[quant_format, batch_size, tp_size,
+                                                                       pp_size, calib_size, kv_cache, awq_block_size],
+                                        outputs=quant_window)
 
             with gr.Tab("Build Engine", elem_id="build_tab"):
                 with gr.Row():
@@ -146,5 +173,4 @@ with gr.Blocks(css_paths="nim_ui.css") as demo:
                         engine_btn = gr.Button("Run Engine")
                         engine_btn.click(fn=engine_btn_click, inputs=engine_btn, outputs=engine_btn)
 
-proxy_prefix = os.environ.get("PROXY_PREFIX")
-demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)
+demo.launch()
