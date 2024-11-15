@@ -11,7 +11,6 @@ BASE_URL = "http://0.0.0.0:8082"
 HEADERS = {'Content-Type': 'application/json'}
 model = Model()
 env = Environment()
-last_quantized_model_name = ""
 
 
 def get_hf_model_name(mod: Model):
@@ -19,6 +18,11 @@ def get_hf_model_name(mod: Model):
     if mod.type is not None and mod.type != "":
         hf_mod += "-" + mod.type
     return hf_mod
+
+
+def get_quant_hf_model_name(mod: Model, qformat):
+    quant_hf_mod = "quant_" + get_hf_model_name(mod) + "_" + qformat
+    return quant_hf_mod
 
 
 def btn_click(button: gr.Button):
@@ -71,7 +75,6 @@ def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, aw
         "--calib_size": calib_s,
         "--awq_block_size": awq_block_s
     }
-    last_quantized_model_name = "quant_" + hf_mod + "_" + q_format
 
     req_body = {"model": model.get_dict(), "quant_params": quant_params}
 
@@ -81,13 +84,13 @@ def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, aw
         yield output
 
 
-def start_engine_build(workers_num, max_input_length):
+def start_engine_build(qformat, workers_num, max_input_length):
     url = BASE_URL + "/" + "build-engine"
     req_body = {
-        "quant_model": last_quantized_model_name,
+        "quant_model": get_quant_hf_model_name(model, qformat),
         "trtllm_params": {
             "--workers": workers_num,
-            "--max_input_length": max_input_length
+            "--max_input_len": max_input_length
         }
     }
     output = ""
@@ -175,7 +178,7 @@ with gr.Blocks(css="./nim_ui.css") as demo:
             with gr.Tab("Build Engine", elem_id="build_tab"):
                 with gr.Row():
                     with gr.Column(scale=3):
-                        gr.Textbox(label="Build Window", lines=25, elem_id="build_window")
+                        build_window = gr.Textbox(label="Build Window", lines=25, elem_id="build_window")
 
                     with gr.Column(elem_id="build_setting"):
                         workers = gr.Number(label="workers", minimum=1, value=1, interactive=True,
@@ -186,7 +189,7 @@ with gr.Blocks(css="./nim_ui.css") as demo:
                                   info="should not be more than {max_position_embeddings} in config.json of the base model")
                         start_engine_btn = gr.Button("Start Engine Build")
 
-                        start_engine_btn.click(fn=start_engine_build, inputs=[workers, max_input_len], outputs=build_window)
+                        start_engine_btn.click(fn=start_engine_build, inputs=[quant_format, workers, max_input_len], outputs=build_window)
 
             with gr.Tab("Run Engine", elem_id="run_tab"):
                 with gr.Row():

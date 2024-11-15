@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from prepare_env import prepare_env
 from quantization import start_quant
+from build_engine import start_building_engine
 from EnvironmentRequestBody import EnvironmentRequestBody
 
 subprocess.run(['chmod', '-R', '+rwx', './scripts/'])

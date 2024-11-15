@@ -4,11 +4,14 @@ cd ../../../models
 inputs=("$@")
 checkpoint_name="${inputs[0]}"
 output_dir="trtllm_""${checkpoint_name}"
+unset inputs[0]
 
 outcome=$(find ./"${output_dir}" -maxdepth 1 -mindepth 1 -type d)
+command="trtllm-build --checkpoint_dir=./""${checkpoint_name}"" ""${inputs[*]}"" --output_dir=./""${output_dir}"
 
 if [[ -z "$outcome" ]]; then
-  outcome=$(eval "trtllm-build --checkpoint_dir=./""${checkpoint_name}"" ""${inputs[*]}"" --output_dir=./trtllm_""${output_dir}")
+  echo "${command}"
+  outcome=$(eval "${command}")
 
   if [[ "$outcome" -eq 0 ]]; then
     echo "------------- TensorRT-LLM engine successfully built! ------------------------ "
