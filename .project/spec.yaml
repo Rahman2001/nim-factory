@@ -86,24 +86,7 @@ environment:
       target: ""
 execution:
   apps:
-  - name: simple-gradio-app
-    type: custom
-    class: webapp
-    start_command: cd /project/code/nim-factory-ui && PROXY_PREFIX=$PROXY_PREFIX python3
-      app.py
-    health_check_command: curl -f "http://localhost:8080/"
-    stop_command: pkill -f '^python3 app.py'
-    user_msg: ""
-    logfile_path: ""
-    timeout_seconds: 60
-    icon_url: ""
-    webapp_options:
-      autolaunch: true
-      port: "8080"
-      proxy:
-        trim_prefix: false
-      url: http://localhost:8080/
-  - name: gradio-backend-app
+  - name: backend-app
     type: custom
     class: webapp
     start_command: cd /project/code/nim-factory-ui/backend && uvicorn main:app --host
@@ -120,6 +103,23 @@ execution:
       proxy:
         trim_prefix: false
       url: http://localhost:8082
+  - name: frontend-app
+    type: custom
+    class: webapp
+    start_command: cd /project/code/nim-factory-ui && PROXY_PREFIX=$PROXY_PREFIX python3
+      app.py
+    health_check_command: curl -f "http://localhost:8080/"
+    stop_command: pkill -f '^python3 app.py'
+    user_msg: ""
+    logfile_path: ""
+    timeout_seconds: 60
+    icon_url: ""
+    webapp_options:
+      autolaunch: true
+      port: "8080"
+      proxy:
+        trim_prefix: false
+      url: http://localhost:8080/
   resources:
     gpu:
       requested: 1
