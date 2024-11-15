@@ -88,7 +88,7 @@
 
 #quantization_window textarea, #build_window textarea, #component-7 >*:nth-child(3) > .form input  {
     background-color: black;
-    color: white;
+    -webkit-text-fill-color: white;
     font-family: "Lucida Console", "Courier New", monospace;
     font-size: smaller;
 }

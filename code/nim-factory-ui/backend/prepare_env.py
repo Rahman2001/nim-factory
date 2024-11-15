@@ -3,7 +3,6 @@ import os.path
 import subprocess
 
 from EnvironmentRequestBody import EnvironmentRequestBody
-# from Model import Model
 from models import repo
 
 model_file_exists = os.path.exists("model_path.json")
@@ -28,7 +27,7 @@ def save_model_path(has_model: int, hf_model: str):
     if has_model == 0:
         with open("model_path.json", "r") as f:
             json_object = json.load(f)
-            json_object["base_model"]["gpt2"] = "/model/" + hf_model
+            json_object["base_models"]["gpt2"] = "/model/" + hf_model
 
         with open("model_path.json", "w") as f:
             json.dump(json_object, f, indent=4)
@@ -36,7 +35,7 @@ def save_model_path(has_model: int, hf_model: str):
 
 def find_base_model_path(hf_model: str):
     with open("model_path.json", "r") as f:
-        path = json.load(f)["base_model"][hf_model]
+        path = json.load(f)["base_models"][hf_model]
     return path
 
 
@@ -46,8 +45,8 @@ def prepare_env(environment: EnvironmentRequestBody):
 
     if not model_file_exists:
         with open("model_path.json", "w") as f:
-            base_model = {"base_model": {}}
-            json.dump(base_model, f)
+            dict_init = {"base_models": {}, "quant_models": {}, "trtllm_engines": {}}
+            json.dump(dict_init, f)
 
         hf_link = get_huggingface_repo(environment)
         hf_token = "unknown"

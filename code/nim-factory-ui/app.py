@@ -51,7 +51,7 @@ def load_env():
 
 def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, awq_block_s):
     url = BASE_URL + "/" + "quantize-model"
-    quant_dic = {
+    quant_params = {
         "--model_dir": "alndslkan",
         "--kv_cache_dtype": kv_cache_type,
         "--qformat": q_format,
@@ -61,8 +61,11 @@ def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, aw
         "--calib_size": calib_s,
         "--awq_block_size": awq_block_s
     }
+
+    req_body = {"model": model.get_dict(), "quant_params": quant_params}
+
     output = ""
-    for chunk in requests.post(url, json=quant_dic, headers=HEADERS, stream=True).iter_content():
+    for chunk in requests.post(url, json=req_body, headers=HEADERS, stream=True).iter_content():
         output += chunk.decode("utf-8")
         yield output
 
@@ -173,6 +176,6 @@ with gr.Blocks(css="./nim_ui.css") as demo:
                         engine_btn = gr.Button("Run Engine")
                         engine_btn.click(fn=engine_btn_click, inputs=engine_btn, outputs=engine_btn)
 
-                        
+
 proxy_prefix = os.environ.get("PROXY_PREFIX")
 demo.launch(server_name="0.0.0.0", server_port=8080, root_path=proxy_prefix)

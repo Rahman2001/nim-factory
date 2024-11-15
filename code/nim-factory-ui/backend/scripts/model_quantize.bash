@@ -3,15 +3,15 @@
 cd "$PWD"
 cd ../model
 
-read -a inputs
+inputs=("$@")
 
-hf_model=${inputs[1]}
-quant_format=${inputs[2]}
-model_family=${inputs[3]}
+hf_model=${inputs[0]}
+quant_format=${inputs[1]}
+model_family=${inputs[2]}
 
+unset inputs[0]
 unset inputs[1]
 unset inputs[2]
-unset inputs[3]
 
 quant_cmd="python3 quantize.py ""${inputs[*]}"" --output_dir=quant_""${hf_model}""_""${quant_format}"
 
