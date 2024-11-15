@@ -1,6 +1,7 @@
 # apt packages to install should be listed one per line
 python3.10 
 python3-pip
+python-is-python3
 unzip
 wget
 openmpi-bin

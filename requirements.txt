@@ -8,7 +8,6 @@ webdataset
 ijson
 matplotlib
 sacrebleu
-Cython
 pickleshare
 gradio==4.44.1
 fastapi[all]
