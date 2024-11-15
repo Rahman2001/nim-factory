@@ -51,8 +51,12 @@ def load_env():
 
 def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, awq_block_s):
     url = BASE_URL + "/" + "quantize-model"
+    hf_mod = model.version
+    if model.type is not None and model.type != "":
+        hf_mod += "-" + model.type
+    
     quant_params = {
-        "--model_dir": "alndslkan",
+        "--model_dir": "/models/" + hf_mod,
         "--kv_cache_dtype": kv_cache_type,
         "--qformat": q_format,
         "--batch_size": batch_s,

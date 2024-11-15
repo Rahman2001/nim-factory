@@ -9,12 +9,14 @@ inputs=("$@")
 hf_model=${inputs[0]}
 quant_format=${inputs[1]}
 model_family=${inputs[2]}
+model_dir="../../../.."${inputs[3]}
 
 unset inputs[0]
 unset inputs[1]
 unset inputs[2]
+unset inputs[3]
 
-quant_cmd="python3 quantize.py ""${inputs[*]}"" --output_dir=quant_""${hf_model}""_""${quant_format}"
+quant_cmd="python3 quantize.py --model_dir=""${model_dir}"" ""${inputs[*]}"" --output_dir=../../../../models/quant_""${hf_model}""_""${quant_format}"
 echo "This is quantization command : ""$quant_cmd"
 
 outcome=$(find ./quant_"${hf_model}"_"${quant_format}" -maxdepth 1 -mindepth 1 -type f)
@@ -29,8 +31,9 @@ if [[ -z "$outcome" ]]; then
   cd ../quantization
   echo "INFO: Wait until quantization requirements get installed ... "
   pip3 install -r requirements.txt
+  pip3 install PyYAML==6.0.2
   echo " ---------- quantization requirements installed -------------------- "
-
+  
   output=$(eval "$quant_cmd") #execute quantize.py
 
   if [[ "$output" -eq 0 ]]; then

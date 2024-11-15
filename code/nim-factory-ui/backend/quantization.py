@@ -33,14 +33,15 @@ def start_quant(quant_param: dict):
 
     params = ""
     for key, value in quant_param["quant_params"].items():
-        if value is not None and value != "":
+        if key != "--model_dir" and value is not None and value != "":
             params += " " + key + "=" + str(value)
 
     if not model_file_exists:
         return None
     else:
         quant_model = subprocess.Popen([f'scripts/model_quantize.bash {hf_model} '
-                                        f'{quant_param["quant_params"]["--qformat"]} {model_fam} {params}'],
+                                        f'{quant_param["quant_params"]["--qformat"]} {model_fam} ' 
+                                        f'{quant_param["quant_params"]["--model_dir"]} {params}'],
                                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                        executable="/bin/bash", shell=True, encoding="utf-8")
 
