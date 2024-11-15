@@ -25,7 +25,7 @@ def find_quant_model_path(quant_model_name: str):
 
 def start_quant(quant_param: dict):
     model = quant_param["model"]
-    model_fam = model["family"]
+    model_fam = str(model["family"]).lower()
     hf_model = model["version"]
 
     if model['type'] is not None and model['type'] != "":
@@ -39,12 +39,12 @@ def start_quant(quant_param: dict):
     if not model_file_exists:
         return None
     else:
-        quant_model = subprocess.Popen([f'scripts/quant_test.bash {hf_model} '
+        quant_model = subprocess.Popen([f'scripts/model_quantize.bash {hf_model} '
                                         f'{quant_param["quant_params"]["--qformat"]} {model_fam} {params}'],
-                                       stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                        executable="/bin/bash", shell=True, encoding="utf-8")
 
-        for line in quant_model.stdout.readlines():
+        for line in quant_model.stdout:
             status = quant_model.poll()
             if status is not None and status == 0:
                 save_quant_model_path(status, hf_model, quant_param["quant_params"]["--qformat"])

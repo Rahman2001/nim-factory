@@ -1,7 +1,8 @@
 #!/bin/bash
 
 cd "$PWD"
-cd ../model
+echo "This is working directory ""$PWD"
+cd ../../../models
 
 inputs=("$@")
 
@@ -14,11 +15,13 @@ unset inputs[1]
 unset inputs[2]
 
 quant_cmd="python3 quantize.py ""${inputs[*]}"" --output_dir=quant_""${hf_model}""_""${quant_format}"
+echo "This is quantization command : ""$quant_cmd"
 
-outcome=$(find ./quant_"${hf_model}"_"${quant_format}" -maxdepth 1 -mindepth 1 -type d)
+outcome=$(find ./quant_"${hf_model}"_"${quant_format}" -maxdepth 1 -mindepth 1 -type f)
 
 if [[ -z "$outcome" ]]; then
-  cd ../TensorRT-LLM/examples/"${model_family}"
+  cd ../code/TensorRT-LLM/examples/"${model_family}"
+  echo "$PWD"
   echo "INFO: Wait until ${model_family} requirements get installed ...  "
   pip3 install -r requirements.txt
   echo " ---------- ${model_family} requirements installed ----------------------- "

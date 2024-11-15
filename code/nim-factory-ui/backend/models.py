@@ -56,7 +56,7 @@ models = {
     "Baichuan": baichuan,
     "Bloom": bloom,
     "ChatGLM": glm,
-    "Databricks": dbrx,
+    "DBRX": dbrx,
     "Falcon": falcon,
     "Gemma": gemma,
     "GPT": gpt

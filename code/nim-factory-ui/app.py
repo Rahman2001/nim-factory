@@ -65,8 +65,8 @@ def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, aw
     req_body = {"model": model.get_dict(), "quant_params": quant_params}
 
     output = ""
-    for chunk in requests.post(url, json=req_body, headers=HEADERS, stream=True).iter_content():
-        output += chunk.decode("utf-8")
+    for chunk in requests.post(url, json=req_body, headers=HEADERS, stream=True).iter_content(decode_unicode=True):
+        output += chunk
         yield output
 
 
