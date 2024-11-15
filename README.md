@@ -30,6 +30,8 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
     - Click __Clone Project__ and enter the repo URL of your newly-forked repo.
     - AI Workbench will automatically clone the repo and build out the project environment, which can take several minutes to complete.
     - Upon `Build Complete`, select __Open Backend-app__ on the top right of the AI Workbench window, after that, select __Open Frontend-app__ to interact with application in browser.
+    - OR go to __Environment__ section of Workbench and start 1) __backend-app__ , after, 2) __frontend-app__ .
+      ![environment tab](https://github.com/Rahman2001/nim-factory/blob/main/data/backend-app-start.PNG)
 4. __In the Frontend-app:__
    - Choose your desired family model, such as _Llama, Nemotron, GPT_ etc. (__Note__: follow the order of tabs, for example, in our case, we chose "GPT" model family. After that, we are offered available model versions described in "Support Matrix" of TensorRT-LLM documentation.
      ![prepare_environment_page](https://github.com/Rahman2001/nim-factory/blob/main/data/prep_env_ui.PNG)
