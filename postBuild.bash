@@ -4,6 +4,8 @@
 #
 # Note: This file may be removed if you don't need to use it
 git lfs install
+pip3 install "cython<3.0.0" wheel
+pip3 install "pyyaml==5.4.1" --no-build-isolation
 pip3 install tensorrt_llm==0.14.0 -U --extra-index-url https://pypi.nvidia.com
 pip3 install tensorrt-cu12-libs==10.4.0
 pip3 install tensorrt-cu12-bindings==10.4.0
