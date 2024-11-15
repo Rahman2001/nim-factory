@@ -30,9 +30,6 @@ if [[ -z "$outcome" ]]; then
 
   cd ../quantization
   echo "INFO: Wait until quantization requirements get installed ... "
-  pip3 install nvidia-modelopt[all]==0.17.0
-  pip3 install "cython<3.0.0" wheel
-  pip3 install "pyyaml==5.4.1" --no-build-isolation
   pip3 install -r requirements.txt
   echo " ---------- quantization requirements installed -------------------- "
   
