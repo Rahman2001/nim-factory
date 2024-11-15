@@ -11,6 +11,14 @@ BASE_URL = "http://0.0.0.0:8082"
 HEADERS = {'Content-Type': 'application/json'}
 model = Model()
 env = Environment()
+last_quantized_model_name = ""
+
+
+def get_hf_model_name(mod: Model):
+    hf_mod = mod.version
+    if mod.type is not None and mod.type != "":
+        hf_mod += "-" + mod.type
+    return hf_mod
 
 
 def btn_click(button: gr.Button):
@@ -51,10 +59,8 @@ def load_env():
 
 def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, awq_block_s):
     url = BASE_URL + "/" + "quantize-model"
-    hf_mod = model.version
-    if model.type is not None and model.type != "":
-        hf_mod += "-" + model.type
-    
+    hf_mod = get_hf_model_name(model)
+
     quant_params = {
         "--model_dir": "/models/" + hf_mod,
         "--kv_cache_dtype": kv_cache_type,
@@ -65,9 +71,25 @@ def start_quantization(q_format, batch_s, tp_s, pp_s, calib_s, kv_cache_type, aw
         "--calib_size": calib_s,
         "--awq_block_size": awq_block_s
     }
+    last_quantized_model_name = "quant_" + hf_mod + "_" + q_format
 
     req_body = {"model": model.get_dict(), "quant_params": quant_params}
 
+    output = ""
+    for chunk in requests.post(url, json=req_body, headers=HEADERS, stream=True).iter_content(decode_unicode=True):
+        output += chunk
+        yield output
+
+
+def start_engine_build(workers_num, max_input_length):
+    url = BASE_URL + "/" + "build-engine"
+    req_body = {
+        "quant_model": last_quantized_model_name,
+        "trtllm_params": {
+            "--workers": workers_num,
+            "--max_input_length": max_input_length
+        }
+    }
     output = ""
     for chunk in requests.post(url, json=req_body, headers=HEADERS, stream=True).iter_content(decode_unicode=True):
         output += chunk
@@ -156,15 +178,15 @@ with gr.Blocks(css="./nim_ui.css") as demo:
                         gr.Textbox(label="Build Window", lines=25, elem_id="build_window")
 
                     with gr.Column(elem_id="build_setting"):
-                        gr.Number(label="workers", minimum=1, value=1, interactive=True,
+                        workers = gr.Number(label="workers", minimum=1, value=1, interactive=True,
                                   info="The number of workers for building in parallel. (Default is 1)")
-                        gr.Dropdown(label="memory monitoring", choices=[True, False], value=False, interactive=True,
-                                    info="Enable memory monitoring during Engine build. (Default is False)")
-                        gr.Number(label="max input length", minimum=1,
+                        # memory_mon = gr.Dropdown(label="memory monitoring", choices=[True, False], value=False, interactive=True,
+                        #             info="Enable memory monitoring during Engine build. (Default is False)")
+                        max_input_len = gr.Number(label="max input length", minimum=1,
                                   info="should not be more than {max_position_embeddings} in config.json of the base model")
-                        gr.Dropdown(label="model directory", interactive=True,
-                                    info="only downloaded and/or quantized models listed")
-                        gr.Button("Start Engine Build")
+                        start_engine_btn = gr.Button("Start Engine Build")
+
+                        start_engine_btn.click(fn=start_engine_build, inputs=[workers, max_input_len], outputs=build_window)
 
             with gr.Tab("Run Engine", elem_id="run_tab"):
                 with gr.Row():
