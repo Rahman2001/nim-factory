@@ -65,4 +65,7 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
      python3 run.py --engine_dir models/trtllm_quant_gpt2_int4_awq
      ```
      At the moment, __Run Engine__ tab is under active development which enables users to comfortably have a chat with their inference engine. 
-   
+
+   ## Summary
+
+   This project is a demonstration of first steps to building your own "NIMs". A lot is required to do to improve the application, such as advanced error handling, enabling more features of TensorRT-LLM and more. We actively developing __Run Engine__ tab of the application to enable users to interact with built engine despite that we experience the hardware resource shortage at the moment. The application serves as a good stepping stone to those who want to discover the power of TensorRT libraries and take advantage of it.
