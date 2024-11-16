@@ -14,7 +14,7 @@ From there, you will see how to build an inference engine using Nvidia TensorRT-
 ## System Requirements
 - Operating System: Ubuntu 22.04
 - CPU: None, tested with Intel Core i7 7th Gen CPU @ 2.30 GHz
-- GPU requirements: Any NVIDIA training GPU, tested with 1x NVIDIA GTX-4GB
+- GPU requirements: Any NVIDIA training GPU, tested with 1x NVIDIA GTX-16GB
 - NVIDIA driver requirements: Latest driver version (with CUDA 12.2)
 - Storage requirements: 40GB
 
