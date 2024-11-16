@@ -88,7 +88,7 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
      At the moment, __Run Engine__ tab is under active development which enables users to comfortably have a chat with their inference engine.
 
    ### YouTube demo
-   Link: [video link](https://youtu.be/OOQtrP4gen4?si=Hal5_QHZLLKeUn5L)
+   Link: [video link](https://youtu.be/wM6zBFYWE9s)
 
    ## Summary
 
