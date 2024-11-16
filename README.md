@@ -8,6 +8,9 @@ Over the past few years Generative AI models have popped up everywhere - from cr
 
 From there, you will see how to build an inference engine using Nvidia TensorRT-LLM. If you are interested in more detailed explanation for building optimized inference engine, you can take a look at official documentation [here](https://nvidia.github.io/TensorRT-LLM/overview.html). After that, you might want to get your hands on your favourite AI model and quantize it to integrate into your own applications. What model it might be? Llama? Nemotron? Let's start immediately!
 
+## Application diagram
+![diagram](https://github.com/Rahman2001/nim-factory/blob/main/application%20diagram.drawio.svg)
+
 ## System Requirements
 - Operating System: Ubuntu 22.04
 - CPU: None, tested with Intel Core i7 7th Gen CPU @ 2.30 GHz
