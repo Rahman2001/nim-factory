@@ -1,9 +1,0 @@
-{
-    "base_models": {
-        "gpt2": "/model/gpt2"
-    },
-    "quant_models": {
-        "quant_gpt2_int4_awq": "/model/quant_gpt2_int4_awq"
-    },
-    "trtllm_engines": {}
-}
