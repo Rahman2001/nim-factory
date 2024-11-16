@@ -64,7 +64,10 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
      ```bash
      python3 run.py --engine_dir models/trtllm_quant_gpt2_int4_awq
      ```
-     At the moment, __Run Engine__ tab is under active development which enables users to comfortably have a chat with their inference engine. 
+     At the moment, __Run Engine__ tab is under active development which enables users to comfortably have a chat with their inference engine.
+
+   ### YouTube demo
+   Link: [video link](https://youtu.be/OOQtrP4gen4?si=Hal5_QHZLLKeUn5L)
 
    ## Summary
 
