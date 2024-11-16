@@ -60,7 +60,7 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
      [03/12/2024-10:21:11] [TRT-LLM] [I] Engine serialized. Total time: 00:00:02
      [03/12/2024-10:21:11] [TRT-LLM] [I] Total time of building all engines: 00:00:41
      ```
-   - After successfully downloading, quantizing model and building inference engine, paths of each model are saved in <code>model_path.json</code> file which is located in <code>code/nim-factory-ui/backend</code> path of the project. In our case, our file should look like this:
+   - After successfully downloading, quantizing model and building inference engine, paths of each model are saved in <code>model_paths.json</code> file which is located in <code>code/nim-factory-ui/backend</code> path of the project. In our case, our file should look like this:
      ```json
      {
           "base_models": {
@@ -76,6 +76,8 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
           }
      }
      ```
+     It can be used to track all the models when application is deployed to remote servers.
+     
    - Here, you have to check your "__models__" folder for existence of inference engine which starts with "_trtllm_...". If it does, you can run the next command manually to interract with model:
      ```bash
      python3 run.py --engine_dir models/trtllm_quant_gpt2_int4_awq
