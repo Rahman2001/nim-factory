@@ -90,6 +90,9 @@ This section demonstrates how to use this project to run NVIDIA NIM Factory via 
    ### YouTube demo
    Link: [video link](https://youtu.be/wM6zBFYWE9s)
 
+   ### Hackathon submission
+   Check out my achievement and project submission to the hackathon: [hackathon_submission_link](https://devpost.com/software/nvidia-nim-factory)
+
    ## Summary
 
    This project is a demonstration of first steps to building your own "NIMs". A lot is required to do to improve the application, such as advanced error handling, enabling more features of TensorRT-LLM and more. We actively developing __Run Engine__ tab of the application to enable users to interact with built engine despite that we experience the hardware resource shortage at the moment. The application serves as a good stepping stone to those who want to discover the power of TensorRT libraries and take advantage of it.
